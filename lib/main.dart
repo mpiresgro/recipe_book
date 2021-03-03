@@ -1,8 +1,11 @@
 import 'package:recipe_book/hive_repo/db_hive.dart';
 import 'package:recipe_book/riverpod/main_provider.dart';
 import 'package:recipe_book/riverpod/recipe_provider.dart';
+import 'package:recipe_book/screens/main_screen.dart';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+
 
 final mainProvider = ChangeNotifierProvider((ref) => MainProvider());
 
@@ -26,6 +29,7 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.blue,
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
+      home: MainScreen(),
     );
   }
 }
