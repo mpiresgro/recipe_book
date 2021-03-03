@@ -1,6 +1,8 @@
 import 'package:recipe_book/main.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:recipe_book/widgets/category_tile.dart';
+
 
 class CategoryGridScreen extends ConsumerWidget {
   @override
@@ -15,7 +17,7 @@ class CategoryGridScreen extends ConsumerWidget {
             SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2),
         itemBuilder: (BuildContext context, int index) {
           return GridTile(
-            child: Text("Grid Tile"),
+            child: GridTileElement(catIndex: index),
           );
         },
       ),
