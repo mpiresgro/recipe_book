@@ -25,10 +25,10 @@ class RecipeListScreen extends ConsumerWidget {
 
       for (int index = 0; index < count; index++) {
         recipeListItems.add(
-         RecipeTile (
-              catIndex: catIndex,
-              recipeIndex: index,
-            ),
+          RecipeTile(
+            catIndex: catIndex,
+            recipeIndex: index,
+          ),
         );
       }
       return recipeListItems;
@@ -69,10 +69,11 @@ class RecipeListScreen extends ConsumerWidget {
         foregroundColor: Colors.black,
         onPressed: () {
           Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (context) => AddRecipeScreen(catIndex: catIndex),
-              ));
+            context,
+            MaterialPageRoute(
+              builder: (context) => AddRecipeScreen(catIndex: catIndex),
+            ),
+          );
         },
         child: Icon(Icons.add),
       ),
