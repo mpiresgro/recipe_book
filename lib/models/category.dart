@@ -11,9 +11,9 @@ class CategoryModel extends HiveObject {
   String uniqueId;
   @HiveField(2)
   HiveList<RecipeModel> recipeList;
-  // @HiveField(3)
-  // String imageLocation;
+  @HiveField(3)
+  String imageLocation;
 
   CategoryModel(this.title,
-      {this.uniqueId, this.recipeList});
+      {this.uniqueId, this.recipeList, this.imageLocation});
 }

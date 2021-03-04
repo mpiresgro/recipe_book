@@ -26,10 +26,10 @@ class DBHive {
     CategoryRepo _categoryRepo = CategoryRepo();
 
     final List<CategoryModel> categoriesData = [
-      CategoryModel('Carne'),
-      CategoryModel('Peixe'),
-      CategoryModel('Massa'),
-      CategoryModel('Arroz'),
+      CategoryModel('Sobremesas', imageLocation: 'images/desert.png'),
+      CategoryModel('Peixe', imageLocation: 'images/fish.png'),
+      CategoryModel('Saladas', imageLocation: 'images/salad.png'),
+      CategoryModel('Sopas', imageLocation: 'images/soup.png'),
     ];
 
     var categories = await _categoryRepo.readCategories();
