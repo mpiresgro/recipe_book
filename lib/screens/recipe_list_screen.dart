@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:recipe_book/main.dart';
 import 'package:recipe_book/screens/add_recipe_screen.dart';
+import 'package:recipe_book/widgets/recipe_tile.dart';
 // import 'package:flutter_slidable/flutter_slidable.dart';
 
 class RecipeListScreen extends ConsumerWidget {
@@ -24,7 +25,11 @@ class RecipeListScreen extends ConsumerWidget {
 
       for (int index = 0; index < count; index++) {
         recipeListItems.add(
-            Placeholder());
+         RecipeTile (
+              catIndex: catIndex,
+              recipeIndex: index,
+            ),
+        );
       }
       return recipeListItems;
     }
