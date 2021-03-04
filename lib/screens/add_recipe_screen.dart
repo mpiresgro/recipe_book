@@ -94,8 +94,13 @@ class AddRecipeScreen extends ConsumerWidget {
                           if (_formKey.currentState.validate()) {
                             _formKey.currentState.save();
                             bool shouldNavigate;
+                            addRecipeWatcher.setIsFavorite = false;
+                            // if adding a new recipe saveRecipes has NO args
+                            shouldNavigate =
+                                await addRecipeWatcher.saveRecipe();
+
                             if (shouldNavigate) {
-                              // mainProviderWatcher.refreshCategories();
+                              mainProviderWatcher.refreshCategories();
                               Navigator.pop(context);
                             }
                           }
