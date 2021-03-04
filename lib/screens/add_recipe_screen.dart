@@ -32,84 +32,113 @@ class AddRecipeScreen extends ConsumerWidget {
           style: TextStyle(fontSize: 40, letterSpacing: 2, wordSpacing: 5),
         ),
       ),
-      body: Scrollbar(
-        child: SingleChildScrollView(
-          dragStartBehavior: DragStartBehavior.down,
-          padding: const EdgeInsets.symmetric(horizontal: 16),
-          child: Form(
-            key: _formKey,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: [
-                sizedBoxHeightSpace,
-                RecipeFormField(
-                  onSaved: (String value) {
-                    addRecipeWatcher.setRecipeName = value;
-                  },
-                  validator: (value) {
-                    if (value.isEmpty) {
-                      return 'Please provide a recipe name';
-                    }
-                    return null;
-                  },
-                  hintText: "Recipe Name",
-                ),
-                sizedBoxHeightSpace,
-                DropdownButtonFormField(
-                  hint: Text('Seletect Category'),
-                  value: addRecipeWatcher.selectedCategory,
-                  items: mainProviderWatcher.categories
-                      .map(
-                        (category) => DropdownMenuItem<CategoryModel>(
-                          value: category,
-                          child: Text(category.title),
-                        ),
-                      )
-                      .toList(),
-                  onChanged: (CategoryModel selectedCategory) {
-                    addRecipeWatcher.setSelectedCategory(selectedCategory);
-                  },
-                ),
-                sizedBoxHeightSpace,
-                Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: [
-                      ElevatedButton(
-                        style: ElevatedButton.styleFrom(
-                          primary: Colors.deepOrangeAccent, // background
-                          onPrimary: Colors.white, // foreground
-                        ),
-                        child: Text('Cancel'),
-                        onPressed: () {
-                          Navigator.pop(context);
-                        },
+      body: SingleChildScrollView(
+        dragStartBehavior: DragStartBehavior.down,
+        padding: const EdgeInsets.symmetric(horizontal: 16),
+        child: Form(
+          key: _formKey,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              sizedBoxHeightSpace,
+              RecipeFormField(
+                onSaved: (String value) {
+                  addRecipeWatcher.setRecipeName = value;
+                },
+                validator: (value) {
+                  if (value.isEmpty) {
+                    return 'Please provide a recipe name';
+                  }
+                  return null;
+                },
+                hintText: "Recipe Name",
+                maxLines: 1,
+                formHeight: 50
+              ),
+              sizedBoxHeightSpace,
+              DropdownButtonFormField(
+                hint: Text('Seletect Category'),
+                value: addRecipeWatcher.selectedCategory,
+                items: mainProviderWatcher.categories
+                    .map(
+                      (category) => DropdownMenuItem<CategoryModel>(
+                        value: category,
+                        child: Text(category.title),
                       ),
-                      ElevatedButton(
-                        style: ElevatedButton.styleFrom(
-                          primary: Colors.deepOrangeAccent, // background
-                          onPrimary: Colors.white, // foreground
-                        ),
-                        child: Text('Submit'),
-                        onPressed: () async {
-                          if (_formKey.currentState.validate()) {
-                            _formKey.currentState.save();
-                            bool shouldNavigate;
-                            addRecipeWatcher.setIsFavorite = false;
-                            // if adding a new recipe saveRecipes has NO args
-                            shouldNavigate =
-                                await addRecipeWatcher.saveRecipe();
+                    )
+                    .toList(),
+                onChanged: (CategoryModel selectedCategory) {
+                  addRecipeWatcher.setSelectedCategory(selectedCategory);
+                },
+              ),
+              sizedBoxHeightSpace,
+              RecipeFormField(
+                onSaved: (String value) {
+                  addRecipeWatcher.setRecipeIngredients = value;
+                },
+                validator: (value) {
+                  if (value.isEmpty) {
+                    return 'Please provide a recipe ingredients';
+                  }
+                  return null;
+                },
+                hintText: "Recipe Ingredients",
+                maxLines: 6,
+                formHeight: 150
+              ),
+              sizedBoxHeightSpace,
+              RecipeFormField(
+                onSaved: (String value) {
+                  addRecipeWatcher.setRecipeMethod = value;
+                },
+                validator: (value) {
+                  if (value.isEmpty) {
+                    return 'Please provide a recipe method';
+                  }
+                  return null;
+                },
+                hintText: "Recipe Method",
+                maxLines: 6,
+                formHeight: 150
+              ),
+              Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                        primary: Colors.deepOrangeAccent, // background
+                        onPrimary: Colors.white, // foreground
+                      ),
+                      child: Text('Cancel'),
+                      onPressed: () {
+                        Navigator.pop(context);
+                      },
+                    ),
+                    ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                        primary: Colors.deepOrangeAccent, // background
+                        onPrimary: Colors.white, // foreground
+                      ),
+                      child: Text('Submit'),
+                      onPressed: () async {
+                        if (_formKey.currentState.validate()) {
+                          _formKey.currentState.save();
+                          bool shouldNavigate;
+                          addRecipeWatcher.setIsFavorite = false;
+                          // if adding a new recipe saveRecipes has NO args
+                          shouldNavigate =
+                              await addRecipeWatcher.saveRecipe();
 
-                            if (shouldNavigate) {
-                              mainProviderWatcher.refreshCategories();
-                              Navigator.pop(context);
-                            }
+                          if (shouldNavigate) {
+                            mainProviderWatcher.refreshCategories();
+                            Navigator.pop(context);
                           }
-                        },
-                      ),
-                    ]),
-                sizedBoxHeightSpace,
-              ],
-            ),
+                        }
+                      },
+                    ),
+                  ]),
+              sizedBoxHeightSpace,
+            ],
           ),
         ),
       ),
