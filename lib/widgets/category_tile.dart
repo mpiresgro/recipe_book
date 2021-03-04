@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:recipe_book/screens/recipe_list_screen.dart';
+import 'package:recipe_book/utils/load_image.dart';
 
 class GridTileElement extends StatelessWidget {
   const GridTileElement({this.catIndex});
@@ -27,7 +28,7 @@ class GridTileElement extends StatelessWidget {
                 children: [
                   Expanded(
                     child: Container(
-                      child: Icon(Icons.favorite),
+                      child: LoadImage(category.imageLocation),
                     ),
                   ),
                   Padding(
