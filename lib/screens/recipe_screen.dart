@@ -1,7 +1,7 @@
 import 'package:recipe_book/models/recipe.dart';
 import 'package:recipe_book/main.dart';
-// import 'package:recipe_book/widgets/ingredients.dart';
-// import 'package:recipe_book/widgets/method.dart';
+import 'package:recipe_book/widgets/ingredients.dart';
+import 'package:recipe_book/widgets/method.dart';
 // import 'package:recipe_book/widgets/top_recipe.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -20,7 +20,6 @@ class RecipeScreen extends ConsumerWidget {
         mainProviderWatcher.categories[catIndex].recipeList[recipeIndex];
 
     return Scaffold(
-      extendBodyBehindAppBar: true,
       backgroundColor: Colors.white,
       appBar: AppBar(
         backgroundColor: Colors.deepOrangeAccent,
@@ -35,9 +34,8 @@ class RecipeScreen extends ConsumerWidget {
         length: 2,
         child: Column(
           children: [
-            Placeholder(),
             SizedBox(
-              height: 10,
+              height: 100,
             ),
             Container(
               child: Padding(
@@ -49,12 +47,13 @@ class RecipeScreen extends ConsumerWidget {
                 ),
                 child: TabBar(
                   indicatorSize: TabBarIndicatorSize.label,
+                  indicatorColor:  Colors.orangeAccent[400],
                   tabs: [
                     Tab(
                       child: Text(
                         'Ingredients',
                         style: TextStyle(
-                            color: Colors.blueAccent[400],
+                            color: Colors.orangeAccent[400],
                             fontSize: 20,
                             fontWeight: FontWeight.w600),
                       ),
@@ -63,7 +62,7 @@ class RecipeScreen extends ConsumerWidget {
                       child: Text(
                         'Method',
                         style: TextStyle(
-                            color: Colors.blueAccent[400],
+                            color: Colors.orangeAccent[400],
                             fontSize: 20,
                             fontWeight: FontWeight.w600),
                       ),
@@ -75,8 +74,8 @@ class RecipeScreen extends ConsumerWidget {
             Expanded(
               child: TabBarView(
                 children: <Widget>[
-                  Placeholder(),
-                  Placeholder(),
+                  Ingredients(ingredients: "recipe.ingredients"),
+                  Method(method: "recipe.method"),
                 ],
               ),
             ),
