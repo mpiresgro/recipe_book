@@ -4,6 +4,7 @@ import 'package:recipe_book/models/category.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:recipe_book/screens/recipe_list_screen.dart';
 
 class GridTileElement extends StatelessWidget {
   const GridTileElement({this.catIndex});

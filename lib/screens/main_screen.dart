@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:recipe_book/screens/category_screen.dart';
+
 
 class MainScreen extends StatefulWidget {
   @override
@@ -10,10 +12,7 @@ class _MainScreenState extends State<MainScreen> {
       TextStyle(fontSize: 30, fontWeight: FontWeight.bold);
 
   static List<Widget> _pageList = <Widget>[
-    Text(
-      'TODO: CategoryScreen',
-      style: optionStyle,
-    ),
+    CategoryGridScreen(),
     Text(
       'TODO: Shopping List',
       style: optionStyle,

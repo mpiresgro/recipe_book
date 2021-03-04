@@ -29,7 +29,6 @@ class DBHive {
       CategoryModel('Carne'),
       CategoryModel('Peixe'),
       CategoryModel('Massa'),
-      CategoryModel('Sobremesa'),
       CategoryModel('Arroz'),
     ];
 
