@@ -12,28 +12,24 @@ class RecipeModel extends HiveObject {
   CategoryModel category;
 
   @HiveField(2)
-  String imageLocation;
-
-  @HiveField(3)
   String uniqueId;
 
-  @HiveField(4)
+  @HiveField(3)
   Map<String, String> info;
   // {'duration: 20',
   //  ... }
 
-  @HiveField(5)
+  @HiveField(4)
   String ingredients;
 
-  @HiveField(6)
+  @HiveField(5)
   String method;
 
-  @HiveField(7)
+  @HiveField(6)
   bool isFavorite;
 
   RecipeModel(this.title,
       {this.category,
-      this.imageLocation,
       this.uniqueId,
       this.info,
       this.ingredients,
