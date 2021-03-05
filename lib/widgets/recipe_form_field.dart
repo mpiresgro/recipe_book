@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
 
 class RecipeFormField extends StatelessWidget {
-  const RecipeFormField({
-    Key key,
-    this.textEditingController,
-    this.onSaved,
-    this.validator,
-    this.hintText,
-    this.formHeight,
-    this.maxLines
-  }) : super(key: key);
+  const RecipeFormField(
+      {Key key,
+      this.textEditingController,
+      this.onSaved,
+      this.validator,
+      this.hintText,
+      this.formHeight,
+      this.maxLines})
+      : super(key: key);
 
   final TextEditingController textEditingController;
   final Function onSaved;
@@ -23,8 +23,15 @@ class RecipeFormField extends StatelessWidget {
     return Container(
       padding: EdgeInsets.only(left: 20.0),
       decoration: BoxDecoration(
+        boxShadow: [
+          BoxShadow(
+            blurRadius: 2,
+            color: Colors.black,
+          )
+        ],
         color: Colors.white,
         border: Border.all(color: Colors.black),
+        borderRadius: BorderRadius.all(Radius.circular(10.0)),
       ),
       height: formHeight,
       alignment: Alignment.center,
