@@ -74,8 +74,8 @@ class RecipeScreen extends ConsumerWidget {
             Expanded(
               child: TabBarView(
                 children: <Widget>[
-                  Ingredients(ingredients: "recipe.ingredients"),
-                  Method(method: "recipe.method"),
+                  Ingredients(ingredients: recipe.ingredients),
+                  Method(method: recipe.method),
                 ],
               ),
             ),
