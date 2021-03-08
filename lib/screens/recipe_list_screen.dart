@@ -8,7 +8,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:recipe_book/main.dart';
 import 'package:recipe_book/screens/add_recipe_screen.dart';
 import 'package:recipe_book/widgets/recipe_tile.dart';
-// import 'package:flutter_slidable/flutter_slidable.dart';
+import 'package:flutter_slidable/flutter_slidable.dart';
 
 class RecipeListScreen extends ConsumerWidget {
   final int catIndex;
@@ -19,15 +19,58 @@ class RecipeListScreen extends ConsumerWidget {
     final recipeProviderWatcher = watch(recipeProvider);
     final mainProviderWatcher = watch(mainProvider);
     final CategoryModel category = mainProviderWatcher.categories[catIndex];
+    
+    IconSlideAction buildIconSlideActionDelete(int index) {
+      return IconSlideAction(
+          caption: 'Delete',
+          color: Colors.red,
+          icon: Icons.delete,
+          onTap: () {
+            showDialog<bool>(
+              context: context,
+              builder: (context) {
+                return AlertDialog(
+                  title: Text('Delete'),
+                  content: Text('Item will be deleted'),
+                  actions: <Widget>[
+                    FlatButton(
+                      child: Text('Cancel'),
+                      onPressed: () => Navigator.pop(context),
+                    ),
+                    FlatButton(
+                        child: Text('Ok'),
+                        onPressed: () {
+                          RecipeModel toDeleteRecipe =
+                              category.recipeList[index];
+                          recipeProviderWatcher.setSelectedCategory(category);
+                          recipeProviderWatcher.deleteRecipe(toDeleteRecipe);
+                          Navigator.pop(context);
+                          return true;
+                        }),
+                  ],
+                );
+              },
+            );
+          });
+    }
 
     List _buildRecipeList(int count) {
       List<Widget> recipeListItems = List();
 
       for (int index = 0; index < count; index++) {
         recipeListItems.add(
-          RecipeTile(
-            catIndex: catIndex,
-            recipeIndex: index,
+          Slidable(
+            actionPane: SlidableDrawerActionPane(),
+            child: RecipeTile(
+              catIndex: catIndex,
+              recipeIndex: index,
+            ),
+            secondaryActions: <Widget>[
+              Padding(
+                padding: const EdgeInsets.only(top:10.0, bottom:10.0),
+                child: buildIconSlideActionDelete(index),
+              ),
+            ],
           ),
         );
       }
