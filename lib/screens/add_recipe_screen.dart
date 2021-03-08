@@ -10,10 +10,12 @@ class AddRecipeScreen extends ConsumerWidget {
   AddRecipeScreen({this.catIndex});
 
   final _formKey = GlobalKey<FormState>();
+  
+  final recipeNameController = TextEditingController();
 
   @override
   Widget build(BuildContext context, ScopedReader watch) {
-    const sizedBoxHeightSpace = SizedBox(height: 24);
+    const sizedBoxHeightSpace = SizedBox(height: 35);
 
     var mainProviderWatcher = watch(mainProvider);
     var addRecipeWatcher = watch(recipeProvider);
@@ -23,13 +25,37 @@ class AddRecipeScreen extends ConsumerWidget {
           .setSelectedCategory(mainProviderWatcher.categories[catIndex]);
 
     return Scaffold(
+      backgroundColor: Colors.orange[50],
       appBar: AppBar(
+        actions: [
+          ElevatedButton(
+            style: ElevatedButton.styleFrom(
+              primary: Colors.deepOrangeAccent, // background
+              onPrimary: Colors.white, // foreground
+            ),
+            child: Text('Save'),
+            onPressed: () async {
+              if (_formKey.currentState.validate()) {
+                _formKey.currentState.save();
+                bool shouldNavigate;
+                addRecipeWatcher.setIsFavorite = false;
+                // if adding a new recipe saveRecipes has NO args
+                shouldNavigate = await addRecipeWatcher.saveRecipe();
+
+                if (shouldNavigate) {
+                  mainProviderWatcher.refreshCategories();
+                  Navigator.pop(context);
+                }
+              }
+            },
+          )
+        ],
         backgroundColor: Colors.deepOrangeAccent,
         toolbarHeight: 100,
         centerTitle: true,
         title: const Text(
           'Add Recipe',
-          style: TextStyle(fontSize: 40, letterSpacing: 2, wordSpacing: 5),
+          style: TextStyle(fontSize: 25, letterSpacing: 2, wordSpacing: 5),
         ),
       ),
       body: SingleChildScrollView(
@@ -41,7 +67,9 @@ class AddRecipeScreen extends ConsumerWidget {
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               sizedBoxHeightSpace,
+              AddRecipeText(text: "Recipe Name:"),
               RecipeFormField(
+                textEditingController: recipeNameController,
                   onSaved: (String value) {
                     addRecipeWatcher.setRecipeName = value;
                   },
@@ -58,11 +86,15 @@ class AddRecipeScreen extends ConsumerWidget {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
-                  Text("Category"),
+                  AddRecipeText(text: "Category:"),
                   SizedBox(width: 24),
                   Expanded(
                     child: DropdownButtonFormField(
-                      hint: Text('Seletect Category'),
+                      dropdownColor: Colors.orange[50],
+                      style: TextStyle(
+                          fontSize: 15.0,
+                          letterSpacing: 1,
+                          color: Colors.black),
                       value: addRecipeWatcher.selectedCategory,
                       items: mainProviderWatcher.categories
                           .map(
@@ -80,6 +112,7 @@ class AddRecipeScreen extends ConsumerWidget {
                 ],
               ),
               sizedBoxHeightSpace,
+              AddRecipeText(text: "Ingredients:"),
               RecipeFormField(
                   onSaved: (String value) {
                     addRecipeWatcher.setRecipeIngredients = value;
@@ -90,10 +123,11 @@ class AddRecipeScreen extends ConsumerWidget {
                     }
                     return null;
                   },
-                  hintText: "Ingredients",
+                  hintText: "Add ingredients...",
                   maxLines: 6,
-                  formHeight: 150),
+                  formHeight: 130),
               sizedBoxHeightSpace,
+              AddRecipeText(text: "Method:"),
               RecipeFormField(
                   onSaved: (String value) {
                     addRecipeWatcher.setRecipeMethod = value;
@@ -104,47 +138,37 @@ class AddRecipeScreen extends ConsumerWidget {
                     }
                     return null;
                   },
-                  hintText: "Method",
+                  hintText: "Add method...",
                   maxLines: 6,
-                  formHeight: 150),
-              sizedBoxHeightSpace,
-              Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
-                ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                    primary: Colors.deepOrangeAccent, // background
-                    onPrimary: Colors.white, // foreground
-                  ),
-                  child: Text('Cancel'),
-                  onPressed: () {
-                    Navigator.pop(context);
-                  },
-                ),
-                ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                    primary: Colors.deepOrangeAccent, // background
-                    onPrimary: Colors.white, // foreground
-                  ),
-                  child: Text('Submit'),
-                  onPressed: () async {
-                    if (_formKey.currentState.validate()) {
-                      _formKey.currentState.save();
-                      bool shouldNavigate;
-                      addRecipeWatcher.setIsFavorite = false;
-                      // if adding a new recipe saveRecipes has NO args
-                      shouldNavigate = await addRecipeWatcher.saveRecipe();
-
-                      if (shouldNavigate) {
-                        mainProviderWatcher.refreshCategories();
-                        Navigator.pop(context);
-                      }
-                    }
-                  },
-                ),
-              ]),
+                  formHeight: 130),
               sizedBoxHeightSpace,
             ],
           ),
         ),
+      ),
+    );
+  }
+}
+
+class AddRecipeText extends StatelessWidget {
+  AddRecipeText({
+    Key key,
+    this.text,
+  }) : super(key: key);
+
+  final String text;
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.only(left: 18.0),
+      child: Text(
+        text,
+        style: TextStyle(
+            fontSize: 15.0,
+            letterSpacing: 1,
+            fontWeight: FontWeight.w500,
+            color: Colors.orange[900]),
       ),
     );
   }
