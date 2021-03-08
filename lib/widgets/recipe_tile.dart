@@ -23,6 +23,18 @@ class RecipeTile extends ConsumerWidget {
     final RecipeModel recipe = category.recipeList[recipeIndex];
 
     return Card(
+      shape: RoundedRectangleBorder(
+        side: BorderSide(
+          color: Colors.deepOrangeAccent,
+          width: 2,
+        ),
+        borderRadius: BorderRadius.all(
+          Radius.circular(5),
+        ),
+      ),
+      margin: EdgeInsets.all(10.0),
+      elevation: 5.0,
+      color: Colors.orange[100],
       child: InkWell(
         onTap: () {
           Navigator.push(
@@ -41,7 +53,14 @@ class RecipeTile extends ConsumerWidget {
               child: Column(
                 children: [
                   ListTile(
-                    title: Text(recipe.title),
+                    title: Text(
+                      recipe.title,
+                      style: TextStyle(
+                          fontSize: 18.0,
+                          letterSpacing: 1,
+                          fontWeight: FontWeight.w800,
+                          color: Colors.orange[900]),
+                    ),
                   ),
                   // const Divider(thickness: 2),
                 ],
