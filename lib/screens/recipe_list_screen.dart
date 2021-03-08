@@ -35,7 +35,7 @@ class RecipeListScreen extends ConsumerWidget {
     }
 
     return Scaffold(
-      backgroundColor: Colors.orangeAccent[50],
+      backgroundColor: Colors.orange[50],
       appBar: AppBar(
         backgroundColor: Colors.deepOrangeAccent,
         toolbarHeight: 100,
@@ -65,7 +65,7 @@ class RecipeListScreen extends ConsumerWidget {
             : _buildRecipeList(category.recipeList.length),
       ),
       floatingActionButton: FloatingActionButton(
-        backgroundColor: Colors.orangeAccent,
+        backgroundColor: Colors.deepOrangeAccent,
         foregroundColor: Colors.black,
         onPressed: () {
           Navigator.push(
