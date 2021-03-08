@@ -58,8 +58,8 @@ class RecipeTile extends ConsumerWidget {
                       style: TextStyle(
                           fontSize: 18.0,
                           letterSpacing: 1,
-                          fontWeight: FontWeight.w800,
-                          color: Colors.orange[900]),
+                          fontWeight: FontWeight.w400,
+                          color: Colors.black),
                     ),
                   ),
                   // const Divider(thickness: 2),

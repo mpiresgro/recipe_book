@@ -13,6 +13,7 @@ class Ingredients extends StatelessWidget {
         padding: EdgeInsets.zero,
         separatorBuilder: (context, index) {
           return Divider(
+            color: Colors.deepOrangeAccent[100],
             thickness: 2,
           );
         },

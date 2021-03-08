@@ -14,6 +14,7 @@ class Method extends StatelessWidget {
         separatorBuilder: (context, index) {
           return Divider(
             thickness: 2,
+            color: Colors.deepOrangeAccent[100],
           );
         },
         itemCount: sepMethod.length,
@@ -21,7 +22,11 @@ class Method extends StatelessWidget {
           return ListTile(
             title: Text(
               sepMethod[index],
-              style: TextStyle(fontSize: 15, letterSpacing: 1, wordSpacing: 1),
+              style: TextStyle(
+                fontSize: 15,
+                letterSpacing: 1,
+                wordSpacing: 1,
+              ),
             ),
           );
         },
