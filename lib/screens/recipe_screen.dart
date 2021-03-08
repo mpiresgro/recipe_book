@@ -20,14 +20,17 @@ class RecipeScreen extends ConsumerWidget {
         mainProviderWatcher.categories[catIndex].recipeList[recipeIndex];
 
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: Colors.orange[50],
       appBar: AppBar(
         backgroundColor: Colors.deepOrangeAccent,
         toolbarHeight: 100,
         centerTitle: true,
-        title: Text(
-          recipe.title,
-          style: TextStyle(fontSize: 40, letterSpacing: 2, wordSpacing: 5),
+        title: FittedBox(
+          fit: BoxFit.fitWidth,
+          child: Text(
+            recipe.title,
+            style: TextStyle(fontSize: 40, letterSpacing: 2, wordSpacing: 5),
+          ),
         ),
       ),
       body: DefaultTabController(
@@ -47,13 +50,13 @@ class RecipeScreen extends ConsumerWidget {
                 ),
                 child: TabBar(
                   indicatorSize: TabBarIndicatorSize.label,
-                  indicatorColor:  Colors.orangeAccent[400],
+                  indicatorColor: Colors.deepOrangeAccent,
                   tabs: [
                     Tab(
                       child: Text(
                         'Ingredients',
                         style: TextStyle(
-                            color: Colors.orangeAccent[400],
+                            color: Colors.deepOrangeAccent,
                             fontSize: 20,
                             fontWeight: FontWeight.w600),
                       ),
@@ -62,7 +65,7 @@ class RecipeScreen extends ConsumerWidget {
                       child: Text(
                         'Method',
                         style: TextStyle(
-                            color: Colors.orangeAccent[400],
+                            color: Colors.deepOrangeAccent,
                             fontSize: 20,
                             fontWeight: FontWeight.w600),
                       ),
