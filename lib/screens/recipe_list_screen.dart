@@ -1,6 +1,5 @@
 import 'package:recipe_book/models/category.dart';
 import 'package:recipe_book/models/recipe.dart';
-import 'package:recipe_book/riverpod/recipe_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:recipe_book/main.dart';

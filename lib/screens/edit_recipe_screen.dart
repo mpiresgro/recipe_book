@@ -34,21 +34,21 @@ class EditRecipeScreen extends ConsumerWidget {
               onPrimary: Colors.white, // foreground
             ),
             child: Text('Save'),
-            onPressed: null,
-            // () async {
-            //   if (_formKey.currentState.validate()) {
-            //     _formKey.currentState.save();
-            //     bool shouldNavigate;
-            //     addRecipeWatcher.setIsFavorite = false;
-            //     // if adding a new recipe saveRecipes has NO args
-            //     shouldNavigate = await addRecipeWatcher.saveRecipe();
+            onPressed: () async {
+              if (_formKey.currentState.validate()) {
+                _formKey.currentState.save();
+                bool shouldNavigate;
+                addRecipeWatcher.setIsFavorite = toEditRecipe.isFavorite;
+                // if adding a new recipe saveRecipes has NO args
+                shouldNavigate =
+                    await addRecipeWatcher.saveRecipe(toEditRecipe.uniqueId);
 
-            //     if (shouldNavigate) {
-            //       mainProviderWatcher.refreshCategories();
-            //       Navigator.pop(context);
-            //     }
-            //   }
-            // },
+                if (shouldNavigate) {
+                  mainProviderWatcher.refreshCategories();
+                  Navigator.pop(context);
+                }
+              }
+            },
           )
         ],
         backgroundColor: Colors.deepOrangeAccent,
