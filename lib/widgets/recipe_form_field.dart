@@ -23,7 +23,7 @@ class RecipeFormField extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.all(10.0),
       child: Container(
-        padding: EdgeInsets.all(15.0),
+        padding: EdgeInsets.only(left: 10.0),
         decoration: BoxDecoration(
           boxShadow: [
             BoxShadow(
