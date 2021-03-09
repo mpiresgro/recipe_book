@@ -10,8 +10,6 @@ class AddRecipeScreen extends ConsumerWidget {
   AddRecipeScreen({this.catIndex});
 
   final _formKey = GlobalKey<FormState>();
-  
-  final recipeNameController = TextEditingController();
 
   @override
   Widget build(BuildContext context, ScopedReader watch) {
@@ -69,7 +67,6 @@ class AddRecipeScreen extends ConsumerWidget {
               sizedBoxHeightSpace,
               AddRecipeText(text: "Recipe Name:"),
               RecipeFormField(
-                textEditingController: recipeNameController,
                   onSaved: (String value) {
                     addRecipeWatcher.setRecipeName = value;
                   },
@@ -90,6 +87,7 @@ class AddRecipeScreen extends ConsumerWidget {
                   SizedBox(width: 24),
                   Expanded(
                     child: DropdownButtonFormField(
+                      isExpanded: true,
                       dropdownColor: Colors.orange[50],
                       style: TextStyle(
                           fontSize: 15.0,
@@ -100,7 +98,7 @@ class AddRecipeScreen extends ConsumerWidget {
                           .map(
                             (category) => DropdownMenuItem<CategoryModel>(
                               value: category,
-                              child: Text(category.title),
+                              child: Center(child: Text(category.title)),
                             ),
                           )
                           .toList(),
