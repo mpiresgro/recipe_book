@@ -1,12 +1,11 @@
 import 'package:recipe_book/models/category.dart';
 import 'package:recipe_book/models/recipe.dart';
 import 'package:recipe_book/riverpod/recipe_provider.dart';
-// import 'package:recipe_book/screens/add_recipe_screen.dart';
-// import 'package:recipe_book/widgets/recipe_tile.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:recipe_book/main.dart';
 import 'package:recipe_book/screens/add_recipe_screen.dart';
+import 'package:recipe_book/screens/edit_recipe_screen.dart';
 import 'package:recipe_book/widgets/recipe_tile.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 
@@ -21,13 +20,12 @@ class RecipeListScreen extends ConsumerWidget {
     final CategoryModel category = mainProviderWatcher.categories[catIndex];
 
     IconSlideAction buildIconSlideActionDelete(int index) {
-      final RecipeModel recipe = category.recipeList[index];
-
       return IconSlideAction(
           caption: 'Delete',
           color: Colors.red,
           icon: Icons.delete,
           onTap: () {
+            final RecipeModel recipe = category.recipeList[index];
             showDialog<bool>(
               context: context,
               builder: (context) {
@@ -81,6 +79,25 @@ class RecipeListScreen extends ConsumerWidget {
           });
     }
 
+    IconSlideAction buildIconSlideActionEdit(int index) {
+      return IconSlideAction(
+        caption: 'Edit',
+        color: Colors.green,
+        icon: Icons.edit,
+        onTap: () {
+          RecipeModel toEditRecipe = category.recipeList[index];
+          Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => EditRecipeScreen(
+                  catIndex: catIndex,
+                  toEditRecipe: toEditRecipe
+                ),
+              ));
+        },
+      );
+    }
+
     List _buildRecipeList(int count) {
       List<Widget> recipeListItems = List();
 
@@ -92,6 +109,12 @@ class RecipeListScreen extends ConsumerWidget {
               catIndex: catIndex,
               recipeIndex: index,
             ),
+            actions: <Widget>[
+              Padding(
+                padding: const EdgeInsets.only(top: 10.0, bottom: 10.0),
+                child: buildIconSlideActionEdit(index),
+              )
+            ],
             secondaryActions: <Widget>[
               Padding(
                 padding: const EdgeInsets.only(top: 10.0, bottom: 10.0),
