@@ -19,8 +19,10 @@ class RecipeListScreen extends ConsumerWidget {
     final recipeProviderWatcher = watch(recipeProvider);
     final mainProviderWatcher = watch(mainProvider);
     final CategoryModel category = mainProviderWatcher.categories[catIndex];
-    
+
     IconSlideAction buildIconSlideActionDelete(int index) {
+      final RecipeModel recipe = category.recipeList[index];
+
       return IconSlideAction(
           caption: 'Delete',
           color: Colors.red,
@@ -30,15 +32,40 @@ class RecipeListScreen extends ConsumerWidget {
               context: context,
               builder: (context) {
                 return AlertDialog(
-                  title: Text('Delete'),
-                  content: Text('Item will be deleted'),
+                  shape: RoundedRectangleBorder(
+                    side: BorderSide(
+                      color: Colors.deepOrangeAccent,
+                      width: 3,
+                    ),
+                    borderRadius: BorderRadius.all(
+                      Radius.circular(15),
+                    ),
+                  ),
+                  backgroundColor: Colors.orange[50],
+                  title: Text(
+                    'Delete',
+                    style: TextStyle(
+                        fontSize: 20, letterSpacing: 2, wordSpacing: 5),
+                  ),
+                  content: Text(
+                    recipe.title + ' will be deleted',
+                    style: TextStyle(fontSize: 15, wordSpacing: 2),
+                  ),
                   actions: <Widget>[
                     FlatButton(
-                      child: Text('Cancel'),
+                      child: Text(
+                        'Cancel',
+                        style: TextStyle(color: Colors.black),
+                      ),
                       onPressed: () => Navigator.pop(context),
                     ),
                     FlatButton(
-                        child: Text('Ok'),
+                        child: Text(
+                          'Delete',
+                          style: TextStyle(
+                            color: Colors.black,
+                          ),
+                        ),
                         onPressed: () {
                           RecipeModel toDeleteRecipe =
                               category.recipeList[index];
@@ -67,7 +94,7 @@ class RecipeListScreen extends ConsumerWidget {
             ),
             secondaryActions: <Widget>[
               Padding(
-                padding: const EdgeInsets.only(top:10.0, bottom:10.0),
+                padding: const EdgeInsets.only(top: 10.0, bottom: 10.0),
                 child: buildIconSlideActionDelete(index),
               ),
             ],
