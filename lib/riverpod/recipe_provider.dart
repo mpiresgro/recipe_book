@@ -13,10 +13,14 @@ class RecipeProvider extends ChangeNotifier {
 
   RecipeRepo _recipeRepo = RecipeRepo();
 
-  Future<bool> saveRecipe() async {
+  Future<bool> saveRecipe([String uniqueId]) async {
     String _newUniqueId;
 
-    _newUniqueId = uuid.v4();
+    if (uniqueId == null) {
+      _newUniqueId = uuid.v4();
+    } else {
+      _newUniqueId = uniqueId;
+    }
 
     RecipeModel recipe = RecipeModel(_recipeName,
         ingredients: _recipeIngredients,
@@ -36,7 +40,7 @@ class RecipeProvider extends ChangeNotifier {
       notifyListeners();
       return true;
     } catch (e) {
-     print(e);
+      print(e);
       return false;
     }
   }
@@ -70,5 +74,4 @@ class RecipeProvider extends ChangeNotifier {
   CategoryModel get selectedCategory => _categoryToUpdate;
 
   String get recipeName => _recipeName;
-
 }
