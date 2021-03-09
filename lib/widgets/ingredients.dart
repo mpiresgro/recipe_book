@@ -1,31 +1,45 @@
 import 'package:flutter/material.dart';
 
-class Ingredients extends StatelessWidget {
-  Ingredients({this.ingredients});
+class Ingredients extends StatefulWidget {
   final String ingredients;
+  Map<String, bool> ingredientMap = {};
+
+  Ingredients({this.ingredients}) {
+    ingredientMap = {for (var v in ingredients.split('\n')) v: false};
+  }
 
   @override
+  _IngredientsState createState() => _IngredientsState();
+}
+
+class _IngredientsState extends State<Ingredients> {
   Widget build(BuildContext context) {
-    List<String> sepIngredients = ingredients.split('\n');
     return Padding(
-      padding: const EdgeInsets.all(20.0),
+      padding: const EdgeInsets.all(15.0),
       child: ListView.separated(
-        padding: EdgeInsets.zero,
+        itemBuilder: (BuildContext context, int index) {
+          String key = widget.ingredientMap.keys.elementAt(index);
+          return CheckboxListTile(
+            activeColor: Colors.deepOrangeAccent,
+            title: Text(
+              key,
+              style: TextStyle(fontSize: 15, letterSpacing: 1, wordSpacing: 1),
+            ),
+            value: widget.ingredientMap[key],
+            onChanged: (bool value) {
+              setState(() {
+                widget.ingredientMap[key] = value;
+              });
+            },
+          );
+        },
         separatorBuilder: (context, index) {
           return Divider(
             color: Colors.deepOrangeAccent[100],
             thickness: 2,
           );
         },
-        itemCount: sepIngredients.length,
-        itemBuilder: (context, index) {
-          return ListTile(
-            title: Text(
-              sepIngredients[index],
-              style: TextStyle(fontSize: 15, letterSpacing: 1, wordSpacing: 1),
-            ),
-          );
-        },
+        itemCount: widget.ingredientMap.length,
       ),
     );
   }
