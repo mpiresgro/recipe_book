@@ -10,6 +10,7 @@ class RecipeProvider extends ChangeNotifier {
   String _recipeIngredients;
   String _recipeMethod;
   bool _isFavorite;
+  int _servingNumber;
 
   RecipeRepo _recipeRepo = RecipeRepo();
 
@@ -61,6 +62,8 @@ class RecipeProvider extends ChangeNotifier {
 
   set setRecipeName(String recipeName) => _recipeName = recipeName;
 
+  String get recipeName => _recipeName;
+
   set setRecipeIngredients(String recipeIngredients) =>
       _recipeIngredients = recipeIngredients;
 
@@ -73,5 +76,10 @@ class RecipeProvider extends ChangeNotifier {
 
   CategoryModel get selectedCategory => _categoryToUpdate;
 
-  String get recipeName => _recipeName;
+  set setServingNumber(int servingNumber) {
+    _servingNumber = servingNumber;
+    notifyListeners();
+  }
+
+  int get servingNumber => _servingNumber;
 }
