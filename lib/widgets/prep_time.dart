@@ -4,31 +4,37 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:recipe_book/main.dart';
 import 'package:recipe_book/screens/add_recipe_screen.dart';
 
-class Servings extends StatefulWidget {
+class PrepTime extends StatefulWidget {
   @override
-  _ServingsState createState() => _ServingsState();
+  _PrepTimeState createState() => _PrepTimeState();
 }
 
-class _ServingsState extends State<Servings> {
-  int _servingNumber = 0;
+class _PrepTimeState extends State<PrepTime> {
+  Duration _prepTimeDuration = Duration(hours: 0, minutes: 0);
+
+  String timeFormatter(Duration time) {
+    return [time.inHours, time.inMinutes]
+        .map((seg) => seg.remainder(60).toString().padLeft(2, '0'))
+        .join(':');
+  }
 
   @override
   Widget build(BuildContext context) {
     return Consumer(
       builder: (context, watch, child) {
         return ListTile(
-          title: AddRecipeText(text: 'Servings'),
+          title: AddRecipeText(text: 'Duration'),
           trailing: SizedBox(
-            width: 60,
+            width: 80,
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
                 Text(
-                  ' $_servingNumber',
+                  timeFormatter(_prepTimeDuration),
                   style: TextStyle(fontSize: 20),
                 ),
                 Icon(
-                  Icons.person,
+                  Icons.timer,
                   color: Colors.orange[900],
                 )
               ],
@@ -58,20 +64,24 @@ class _ServingsState extends State<Servings> {
         backgroundColor: Colors.orange[50],
         changeToFirst: false,
         hideHeader: false,
-        adapter: NumberPickerAdapter(
-          data: [
-            NumberPickerColumn(
-              begin: 0,
-              end: 25,
-              suffix: Icon(
-                Icons.person,
-                color: Colors.orange[900],
-              ),
+        adapter: NumberPickerAdapter(data: [
+          NumberPickerColumn(begin: 0, end: 23, jump: 1, suffix: Text(' h')),
+          NumberPickerColumn(begin: 0, end: 59, jump: 5, suffix: Text(' m')),
+        ]),
+        delimiter: [
+          PickerDelimiter(
+              child: Container(
+            color: Colors.orange[50],
+            width: 30.0,
+            alignment: Alignment.center,
+            child: Text(
+              ":",
+              style: TextStyle(fontSize: 25),
             ),
-          ],
-        ),
+          ))
+        ],
         title: Text(
-          "Serving number",
+          "Duration",
           style: TextStyle(color: Colors.orange[900], fontSize: 20),
         ),
         selectedTextStyle: TextStyle(
@@ -79,8 +89,9 @@ class _ServingsState extends State<Servings> {
         ),
         onConfirm: (Picker picker, List value) {
           setState(() {
-            _servingNumber = value[0];
-            watch(recipeProvider).setServingNumber = _servingNumber;
+            List<int> values = picker.getSelectedValues();
+            _prepTimeDuration = Duration(hours: values[0], minutes: values[1]);
+            watch(recipeProvider).prepTimeDuration = _prepTimeDuration;
           });
         }).showModal(context);
   }
