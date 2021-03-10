@@ -11,6 +11,7 @@ class RecipeProvider extends ChangeNotifier {
   String _recipeMethod;
   bool _isFavorite;
   int _servingNumber;
+  Duration _prepTimeDuration;
 
   RecipeRepo _recipeRepo = RecipeRepo();
 
@@ -27,7 +28,10 @@ class RecipeProvider extends ChangeNotifier {
         ingredients: _recipeIngredients,
         method: _recipeMethod,
         uniqueId: _newUniqueId,
-        isFavorite: _isFavorite);
+        isFavorite: _isFavorite,
+        servingNumber: _servingNumber,
+        prepTimeDuration: _prepTimeDuration
+        );
 
     await _recipeRepo.saveRecipe(recipe);
 
@@ -82,4 +86,11 @@ class RecipeProvider extends ChangeNotifier {
   }
 
   int get servingNumber => _servingNumber;
+  
+  set prepTimeDuration(Duration prepTimeDuration) {
+    _prepTimeDuration = prepTimeDuration;
+    notifyListeners();
+  }
+
+  Duration get prepTimeDuration => _prepTimeDuration;
 }

@@ -16,8 +16,6 @@ class RecipeModel extends HiveObject {
 
   @HiveField(3)
   Map<String, String> info;
-  // {'duration: 20',
-  //  ... }
 
   @HiveField(4)
   String ingredients;
@@ -28,11 +26,21 @@ class RecipeModel extends HiveObject {
   @HiveField(6)
   bool isFavorite;
 
-  RecipeModel(this.title,
-      {this.category,
-      this.uniqueId,
-      this.info,
-      this.ingredients,
-      this.method,
-      this.isFavorite = false});
+  @HiveField(7)
+  int servingNumber;
+
+  @HiveField(8)
+  Duration prepTimeDuration;
+
+  RecipeModel(
+    this.title, {
+    this.category,
+    this.uniqueId,
+    this.info,
+    this.ingredients,
+    this.method,
+    this.isFavorite = false,
+    this.servingNumber,
+    this.prepTimeDuration,
+  });
 }
