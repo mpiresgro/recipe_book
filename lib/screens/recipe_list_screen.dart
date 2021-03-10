@@ -49,14 +49,14 @@ class RecipeListScreen extends ConsumerWidget {
                     style: TextStyle(fontSize: 15, wordSpacing: 2),
                   ),
                   actions: <Widget>[
-                    FlatButton(
+                    TextButton(
                       child: Text(
                         'Cancel',
                         style: TextStyle(color: Colors.black),
                       ),
                       onPressed: () => Navigator.pop(context),
                     ),
-                    FlatButton(
+                    TextButton(
                         child: Text(
                           'Delete',
                           style: TextStyle(
@@ -89,16 +89,14 @@ class RecipeListScreen extends ConsumerWidget {
               context,
               MaterialPageRoute(
                 builder: (context) => EditRecipeScreen(
-                  catIndex: catIndex,
-                  toEditRecipe: toEditRecipe
-                ),
+                    catIndex: catIndex, toEditRecipe: toEditRecipe),
               ));
         },
       );
     }
 
     List _buildRecipeList(int count) {
-      List<Widget> recipeListItems = List();
+      List<Widget> recipeListItems = [];
 
       for (int index = 0; index < count; index++) {
         recipeListItems.add(
@@ -137,24 +135,27 @@ class RecipeListScreen extends ConsumerWidget {
           style: TextStyle(fontSize: 40, letterSpacing: 2, wordSpacing: 5),
         ),
       ),
-      body: Column(
-        children: category.recipeList == null || category.recipeList.length == 0
-            ? [
-                Padding(
-                  padding: const EdgeInsets.symmetric(
-                    vertical: 250,
-                  ),
-                  child: Center(
-                    child: Container(
-                      child: Text(
-                        'No recipes in this category',
-                        style: TextStyle(fontSize: 20),
-                      ),
-                    ),
-                  ),
-                )
-              ]
-            : _buildRecipeList(category.recipeList.length),
+      body: SingleChildScrollView(
+        child: Column(
+          children:
+              category.recipeList == null || category.recipeList.length == 0
+                  ? [
+                      Padding(
+                        padding: const EdgeInsets.symmetric(
+                          vertical: 250,
+                        ),
+                        child: Center(
+                          child: Container(
+                            child: Text(
+                              'No recipes in this category',
+                              style: TextStyle(fontSize: 20),
+                            ),
+                          ),
+                        ),
+                      )
+                    ]
+                  : _buildRecipeList(category.recipeList.length),
+        ),
       ),
       floatingActionButton: FloatingActionButton(
         backgroundColor: Colors.deepOrangeAccent,
