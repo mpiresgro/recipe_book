@@ -30,7 +30,7 @@ class RecipeModel extends HiveObject {
   int servingNumber;
 
   @HiveField(8)
-  Duration prepTimeDuration;
+  String prepTimeDuration;
 
   RecipeModel(
     this.title, {

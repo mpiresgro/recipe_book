@@ -3,6 +3,7 @@ import 'package:flutter_picker/flutter_picker.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:recipe_book/main.dart';
 import 'package:recipe_book/screens/add_recipe_screen.dart';
+import 'package:recipe_book/utils/aux_functions.dart';
 
 class PrepTime extends StatefulWidget {
   @override
@@ -11,12 +12,6 @@ class PrepTime extends StatefulWidget {
 
 class _PrepTimeState extends State<PrepTime> {
   Duration _prepTimeDuration = Duration(hours: 0, minutes: 0);
-
-  String timeFormatter(Duration time) {
-    return [time.inHours, time.inMinutes]
-        .map((seg) => seg.remainder(60).toString().padLeft(2, '0'))
-        .join(':');
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -91,7 +86,7 @@ class _PrepTimeState extends State<PrepTime> {
           setState(() {
             List<int> values = picker.getSelectedValues();
             _prepTimeDuration = Duration(hours: values[0], minutes: values[1]);
-            watch(recipeProvider).prepTimeDuration = _prepTimeDuration;
+            watch(recipeProvider).prepTimeDuration = timeFormatter(_prepTimeDuration);
           });
         }).showModal(context);
   }

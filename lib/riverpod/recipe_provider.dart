@@ -11,7 +11,7 @@ class RecipeProvider extends ChangeNotifier {
   String _recipeMethod;
   bool _isFavorite;
   int _servingNumber;
-  Duration _prepTimeDuration;
+  String _prepTimeDuration;
 
   RecipeRepo _recipeRepo = RecipeRepo();
 
@@ -22,6 +22,14 @@ class RecipeProvider extends ChangeNotifier {
       _newUniqueId = uuid.v4();
     } else {
       _newUniqueId = uniqueId;
+      // if uniqueId is NOT null, delete recipe from repo
+      for (var index = 0;
+          // find and delete element in recipeList
+          index < _categoryToUpdate.recipeList.length;
+          index++) {
+        if (_categoryToUpdate.recipeList[index].uniqueId == uniqueId)
+        await _categoryToUpdate.recipeList.deleteFromHive(index);
+      }
     }
 
     RecipeModel recipe = RecipeModel(_recipeName,
@@ -30,8 +38,7 @@ class RecipeProvider extends ChangeNotifier {
         uniqueId: _newUniqueId,
         isFavorite: _isFavorite,
         servingNumber: _servingNumber,
-        prepTimeDuration: _prepTimeDuration
-        );
+        prepTimeDuration: _prepTimeDuration);
 
     await _recipeRepo.saveRecipe(recipe);
 
@@ -86,11 +93,10 @@ class RecipeProvider extends ChangeNotifier {
   }
 
   int get servingNumber => _servingNumber;
-  
-  set prepTimeDuration(Duration prepTimeDuration) {
+
+  set prepTimeDuration(String prepTimeDuration) {
     _prepTimeDuration = prepTimeDuration;
     notifyListeners();
   }
 
-  Duration get prepTimeDuration => _prepTimeDuration;
 }
