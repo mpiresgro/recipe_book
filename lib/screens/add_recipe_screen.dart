@@ -4,6 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:recipe_book/main.dart';
 import 'package:recipe_book/models/category.dart';
 import 'package:recipe_book/widgets/recipe_form_field.dart';
+import 'package:recipe_book/widgets/servings.dart';
 
 class AddRecipeScreen extends ConsumerWidget {
   final int catIndex;
@@ -17,7 +18,7 @@ class AddRecipeScreen extends ConsumerWidget {
 
     var mainProviderWatcher = watch(mainProvider);
     var addRecipeWatcher = watch(recipeProvider);
-
+    
     if (mainProviderWatcher.categories.isNotEmpty)
       addRecipeWatcher
           .setSelectedCategory(mainProviderWatcher.categories[catIndex]);
@@ -62,10 +63,10 @@ class AddRecipeScreen extends ConsumerWidget {
         child: Form(
           key: _formKey,
           child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
+            crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               sizedBoxHeightSpace,
-              AddRecipeText(text: "Recipe Name:"),
+              AddRecipeText(text: "Recipe Name"),
               RecipeFormField(
                   onSaved: (String value) {
                     addRecipeWatcher.setRecipeName = value;
@@ -83,7 +84,7 @@ class AddRecipeScreen extends ConsumerWidget {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
-                  AddRecipeText(text: "Category:"),
+                  AddRecipeText(text: "Category"),
                   SizedBox(width: 24),
                   Expanded(
                     child: DropdownButtonFormField(
@@ -110,7 +111,7 @@ class AddRecipeScreen extends ConsumerWidget {
                 ],
               ),
               sizedBoxHeightSpace,
-              AddRecipeText(text: "Ingredients:"),
+              AddRecipeText(text: "Ingredients"),
               RecipeFormField(
                   onSaved: (String value) {
                     addRecipeWatcher.setRecipeIngredients = value;
@@ -124,8 +125,8 @@ class AddRecipeScreen extends ConsumerWidget {
                   hintText: "Add ingredients...",
                   maxLines: 6,
                   formHeight: 130),
-              sizedBoxHeightSpace,
-              AddRecipeText(text: "Method:"),
+              // sizedBoxHeightSpace,
+              AddRecipeText(text: "Method"),
               RecipeFormField(
                   onSaved: (String value) {
                     addRecipeWatcher.setRecipeMethod = value;
@@ -139,6 +140,22 @@ class AddRecipeScreen extends ConsumerWidget {
                   hintText: "Add method...",
                   maxLines: 6,
                   formHeight: 130),
+              ExpansionTile(
+                maintainState: true,
+                backgroundColor: Colors.orange[100],
+                tilePadding: EdgeInsets.symmetric(horizontal: 110.0),
+                title: Text(
+                  "More info...",
+                  style: TextStyle(
+                      fontSize: 15.0,
+                      letterSpacing: 1,
+                      fontWeight: FontWeight.w500,
+                      color: Colors.orange[900]),
+                ),
+                children: [
+                   Servings(),
+                ],
+              ),
               sizedBoxHeightSpace,
             ],
           ),
