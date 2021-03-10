@@ -2,7 +2,6 @@ import 'package:recipe_book/models/recipe.dart';
 import 'package:recipe_book/main.dart';
 import 'package:recipe_book/widgets/ingredients.dart';
 import 'package:recipe_book/widgets/method.dart';
-// import 'package:recipe_book/widgets/top_recipe.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -39,6 +38,49 @@ class RecipeScreen extends ConsumerWidget {
           children: [
             SizedBox(
               height: 100,
+              width: 350,
+              child: Padding(
+                padding: const EdgeInsets.all(10.0),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Row(
+                      children: [
+                        Text(
+                          'Servings: ' + recipe.servingNumber.toString(),
+                          style: TextStyle(
+                              fontSize: 18,
+                              letterSpacing: 1,
+                              wordSpacing: 1,
+                              fontWeight: FontWeight.w600),
+                        ),
+                        Icon(
+                          Icons.person,
+                          color: Colors.orange[900],
+                        ),
+                      ],
+                    ),
+                    Row(
+                      children: [
+                        Text(
+                          'Prep Time: ' +
+                              recipe.prepTimeDuration,
+                          style: TextStyle(
+                              fontSize: 18,
+                              letterSpacing: 1,
+                              wordSpacing: 1,
+                              fontWeight: FontWeight.w600),
+                        ),
+                        Icon(
+                          Icons.timer,
+                          color: Colors.orange[900],
+                        )
+                      ],
+                    ),
+                  ],
+                ),
+              ),
             ),
             Container(
               child: Padding(
