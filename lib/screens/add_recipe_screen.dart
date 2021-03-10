@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:recipe_book/main.dart';
 import 'package:recipe_book/models/category.dart';
+import 'package:recipe_book/widgets/prep_time.dart';
 import 'package:recipe_book/widgets/recipe_form_field.dart';
 import 'package:recipe_book/widgets/servings.dart';
 
@@ -18,7 +19,7 @@ class AddRecipeScreen extends ConsumerWidget {
 
     var mainProviderWatcher = watch(mainProvider);
     var addRecipeWatcher = watch(recipeProvider);
-    
+
     if (mainProviderWatcher.categories.isNotEmpty)
       addRecipeWatcher
           .setSelectedCategory(mainProviderWatcher.categories[catIndex]);
@@ -91,7 +92,7 @@ class AddRecipeScreen extends ConsumerWidget {
                       isExpanded: true,
                       dropdownColor: Colors.orange[50],
                       style: TextStyle(
-                          fontSize: 15.0,
+                          fontSize: 20.0,
                           letterSpacing: 1,
                           color: Colors.black),
                       value: addRecipeWatcher.selectedCategory,
@@ -141,19 +142,13 @@ class AddRecipeScreen extends ConsumerWidget {
                   maxLines: 6,
                   formHeight: 130),
               ExpansionTile(
+                childrenPadding: EdgeInsets.only(left: 20, right: 20),
                 maintainState: true,
-                backgroundColor: Colors.orange[100],
-                tilePadding: EdgeInsets.symmetric(horizontal: 110.0),
-                title: Text(
-                  "More info...",
-                  style: TextStyle(
-                      fontSize: 15.0,
-                      letterSpacing: 1,
-                      fontWeight: FontWeight.w500,
-                      color: Colors.orange[900]),
-                ),
+                tilePadding: EdgeInsets.symmetric(horizontal: 90.0),
+                title: AddRecipeText(text: "More info..."),
                 children: [
-                   Servings(),
+                  Servings(),
+                  PrepTime(),
                 ],
               ),
               sizedBoxHeightSpace,
@@ -180,7 +175,7 @@ class AddRecipeText extends StatelessWidget {
       child: Text(
         text,
         style: TextStyle(
-            fontSize: 15.0,
+            fontSize: 20.0,
             letterSpacing: 1,
             fontWeight: FontWeight.w500,
             color: Colors.orange[900]),
