@@ -11,7 +11,7 @@ class RecipeProvider extends ChangeNotifier {
   String _recipeMethod;
   bool _isFavorite;
   int _servingNumber;
-  String _prepTimeDuration;
+  List<int> _prepTimeDuration;
 
   RecipeRepo _recipeRepo = RecipeRepo();
 
@@ -94,7 +94,7 @@ class RecipeProvider extends ChangeNotifier {
 
   int get servingNumber => _servingNumber;
 
-  set prepTimeDuration(String prepTimeDuration) {
+  set prepTimeDuration(List<int> prepTimeDuration) {
     _prepTimeDuration = prepTimeDuration;
     notifyListeners();
   }
