@@ -11,6 +11,16 @@ final mainProvider = ChangeNotifierProvider((ref) => MainProvider());
 
 final recipeProvider = ChangeNotifierProvider((ref) => RecipeProvider());
 
+final addRecipeProvider = ChangeNotifierProvider.autoDispose((ref) {
+
+  ref.onDispose(() {
+    print('addRecipeProvider disposed!!!');
+  });
+
+  return RecipeProvider();
+});
+
+
 void main() async {
   await DBHive().initHive();
   runApp(
@@ -26,7 +36,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Recipe Book',
       theme: ThemeData(
-        primarySwatch: Colors.blue,
+        primarySwatch: Colors.deepOrangeAccent[300],
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
       home: MainScreen(),
