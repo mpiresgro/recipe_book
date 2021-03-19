@@ -5,12 +5,25 @@ import 'package:recipe_book/main.dart';
 import 'package:recipe_book/screens/add_recipe_screen.dart';
 
 class Servings extends StatefulWidget {
+  final int toEditServing;
+  const Servings({this.toEditServing});
+
   @override
   _ServingsState createState() => _ServingsState();
 }
 
 class _ServingsState extends State<Servings> {
-  int _servingNumber = 0;
+  int _servingNumber;
+
+  @override
+  void initState() {
+    if (widget.toEditServing != null) {
+      _servingNumber = widget.toEditServing;
+    } else {
+      _servingNumber = 0;
+    }
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -61,6 +74,7 @@ class _ServingsState extends State<Servings> {
         adapter: NumberPickerAdapter(
           data: [
             NumberPickerColumn(
+              initValue: _servingNumber,
               begin: 0,
               end: 25,
               suffix: Icon(
@@ -78,9 +92,9 @@ class _ServingsState extends State<Servings> {
           color: Colors.orange[900],
         ),
         onConfirm: (Picker picker, List value) {
+          context.read(addRecipeProvider).setServingNumber = value[0];
           setState(() {
             _servingNumber = value[0];
-            watch(recipeProvider).setServingNumber = _servingNumber;
           });
         }).showModal(context);
   }

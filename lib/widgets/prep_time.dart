@@ -6,12 +6,26 @@ import 'package:recipe_book/screens/add_recipe_screen.dart';
 import 'package:recipe_book/utils/aux_functions.dart';
 
 class PrepTime extends StatefulWidget {
+  final List<int> toEditPrepTimeDuration;
+
+  const PrepTime({this.toEditPrepTimeDuration});
+
   @override
   _PrepTimeState createState() => _PrepTimeState();
 }
 
 class _PrepTimeState extends State<PrepTime> {
-  Duration _prepTimeDuration = Duration(hours: 0, minutes: 0);
+  List<int> _prepTimeDuration;
+
+  @override
+  void initState() {
+    if (widget.toEditPrepTimeDuration != null) {
+      _prepTimeDuration = widget.toEditPrepTimeDuration;
+    } else {
+      _prepTimeDuration = [0, 0];
+    }
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -36,14 +50,14 @@ class _PrepTimeState extends State<PrepTime> {
             ),
           ),
           onTap: () {
-            showPickerNumber(context, watch);
+            showPickerNumber(context);
           },
         );
       },
     );
   }
 
-  showPickerNumber(BuildContext context, ScopedReader watch) {
+  showPickerNumber(BuildContext context) {
     Picker(
         cancelTextStyle: TextStyle(
           color: Colors.orange[900],
@@ -60,8 +74,20 @@ class _PrepTimeState extends State<PrepTime> {
         changeToFirst: false,
         hideHeader: false,
         adapter: NumberPickerAdapter(data: [
-          NumberPickerColumn(begin: 0, end: 23, jump: 1, suffix: Text(' h')),
-          NumberPickerColumn(begin: 0, end: 59, jump: 5, suffix: Text(' m')),
+          NumberPickerColumn(
+            initValue: _prepTimeDuration[0],
+            begin: 0,
+            end: 23,
+            jump: 1,
+            suffix: Text(' h'),
+          ),
+          NumberPickerColumn(
+            initValue: _prepTimeDuration[1],
+            begin: 0,
+            end: 59,
+            jump: 5,
+            suffix: Text(' m'),
+          ),
         ]),
         delimiter: [
           PickerDelimiter(
@@ -83,10 +109,11 @@ class _PrepTimeState extends State<PrepTime> {
           color: Colors.orange[900],
         ),
         onConfirm: (Picker picker, List value) {
+          List<int> values = picker.getSelectedValues();
+          context.read(addRecipeProvider).setPrepTimeDuration = values;
+
           setState(() {
-            List<int> values = picker.getSelectedValues();
-            _prepTimeDuration = Duration(hours: values[0], minutes: values[1]);
-            watch(recipeProvider).prepTimeDuration = timeFormatter(_prepTimeDuration);
+            _prepTimeDuration = values;
           });
         }).showModal(context);
   }
