@@ -1,5 +1,6 @@
 import 'package:recipe_book/models/recipe.dart';
 import 'package:recipe_book/main.dart';
+import 'package:recipe_book/utils/aux_functions.dart';
 import 'package:recipe_book/widgets/ingredients.dart';
 import 'package:recipe_book/widgets/method.dart';
 import 'package:flutter/material.dart';
@@ -13,7 +14,6 @@ class RecipeScreen extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, ScopedReader watch) {
-    final recipeProviderWatcher = watch(recipeProvider);
     final mainProviderWatcher = watch(mainProvider);
     final RecipeModel recipe =
         mainProviderWatcher.categories[catIndex].recipeList[recipeIndex];
@@ -45,39 +45,41 @@ class RecipeScreen extends ConsumerWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Row(
-                      children: [
-                        Text(
-                          'Servings: ' + recipe.servingNumber.toString(),
-                          style: TextStyle(
-                              fontSize: 18,
-                              letterSpacing: 1,
-                              wordSpacing: 1,
-                              fontWeight: FontWeight.w600),
-                        ),
-                        Icon(
-                          Icons.person,
-                          color: Colors.orange[900],
-                        ),
-                      ],
-                    ),
-                    Row(
-                      children: [
-                        Text(
-                          'Prep Time: ' +
-                              recipe.prepTimeDuration,
-                          style: TextStyle(
-                              fontSize: 18,
-                              letterSpacing: 1,
-                              wordSpacing: 1,
-                              fontWeight: FontWeight.w600),
-                        ),
-                        Icon(
-                          Icons.timer,
-                          color: Colors.orange[900],
-                        )
-                      ],
-                    ),
+                    if (recipe.servingNumber != null)
+                      Row(
+                        children: [
+                          Text(
+                            'Servings: ' + recipe.servingNumber.toString(),
+                            style: TextStyle(
+                                fontSize: 18,
+                                letterSpacing: 1,
+                                wordSpacing: 1,
+                                fontWeight: FontWeight.w600),
+                          ),
+                          Icon(
+                            Icons.person,
+                            color: Colors.orange[900],
+                          ),
+                        ],
+                      ),
+                    if (recipe.prepTimeDuration != null)
+                      Row(
+                        children: [
+                          Text(
+                            'Prep Time: ' +
+                                timeFormatter(recipe.prepTimeDuration),
+                            style: TextStyle(
+                                fontSize: 18,
+                                letterSpacing: 1,
+                                wordSpacing: 1,
+                                fontWeight: FontWeight.w600),
+                          ),
+                          Icon(
+                            Icons.timer,
+                            color: Colors.orange[900],
+                          )
+                        ],
+                      ),
                   ],
                 ),
               ),
