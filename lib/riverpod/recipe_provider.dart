@@ -22,14 +22,6 @@ class RecipeProvider extends ChangeNotifier {
       _newUniqueId = uuid.v4();
     } else {
       _newUniqueId = uniqueId;
-      // if uniqueId is NOT null, delete recipe from repo
-      for (var index = 0;
-          // find and delete element in recipeList
-          index < _categoryToUpdate.recipeList.length;
-          index++) {
-        if (_categoryToUpdate.recipeList[index].uniqueId == uniqueId)
-        await _categoryToUpdate.recipeList.deleteFromHive(index);
-      }
     }
 
     RecipeModel recipe = RecipeModel(_recipeName,
@@ -89,14 +81,15 @@ class RecipeProvider extends ChangeNotifier {
 
   set setServingNumber(int servingNumber) {
     _servingNumber = servingNumber;
-    notifyListeners();
   }
 
   int get servingNumber => _servingNumber;
 
-  set prepTimeDuration(List<int> prepTimeDuration) {
+  set setPrepTimeDuration(List<int> prepTimeDuration) {
     _prepTimeDuration = prepTimeDuration;
-    notifyListeners();
   }
+
+  List<int> get prepTimeDuration => _prepTimeDuration;
+
 
 }
