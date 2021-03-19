@@ -2,7 +2,6 @@ import 'dart:io';
 
 import 'package:recipe_book/models/category.dart';
 import 'package:recipe_book/models/recipe.dart';
-// import 'package:recipe_book/screens/recipe_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:recipe_book/main.dart';
@@ -17,7 +16,7 @@ class RecipeTile extends ConsumerWidget {
   @override
   Widget build(BuildContext context, ScopedReader watch) {
     final mainProviderWatcher = watch(mainProvider);
-    var addRecipeWatcher = watch(recipeProvider);
+    var recipeWatcher = watch(recipeProvider);
 
     final CategoryModel category = mainProviderWatcher.categories[catIndex];
     final RecipeModel recipe = category.recipeList[recipeIndex];
@@ -73,7 +72,7 @@ class RecipeTile extends ConsumerWidget {
               color: Colors.red,
               onPressed: () {
                 recipe.isFavorite = !recipe.isFavorite;
-                addRecipeWatcher.updateIsFavorite(recipe);
+                recipeWatcher.updateIsFavorite(recipe);
                 mainProviderWatcher.refreshCategories();
               },
             )
