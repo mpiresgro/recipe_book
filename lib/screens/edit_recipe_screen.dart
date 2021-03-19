@@ -4,7 +4,9 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:recipe_book/main.dart';
 import 'package:recipe_book/models/category.dart';
 import 'package:recipe_book/models/recipe.dart';
+import 'package:recipe_book/widgets/prep_time.dart';
 import 'package:recipe_book/widgets/recipe_form_field.dart';
+import 'package:recipe_book/widgets/servings.dart';
 
 class EditRecipeScreen extends ConsumerWidget {
   final int catIndex;
@@ -18,7 +20,7 @@ class EditRecipeScreen extends ConsumerWidget {
     const sizedBoxHeightSpace = SizedBox(height: 35);
 
     var mainProviderWatcher = watch(mainProvider);
-    var addRecipeWatcher = watch(recipeProvider);
+    var addRecipeWatcher = watch(addRecipeProvider);
 
     if (mainProviderWatcher.categories.isNotEmpty)
       addRecipeWatcher
@@ -39,6 +41,19 @@ class EditRecipeScreen extends ConsumerWidget {
                 _formKey.currentState.save();
                 bool shouldNavigate;
                 addRecipeWatcher.setIsFavorite = toEditRecipe.isFavorite;
+
+                // janky way of setting servingNumber and prepTimeDuration
+                // if they are still null at this point and were defined before
+                if (addRecipeWatcher.servingNumber == null &&
+                    toEditRecipe.servingNumber != null)
+                  addRecipeWatcher.setServingNumber =
+                      toEditRecipe.servingNumber;
+
+                if (addRecipeWatcher.prepTimeDuration == null &&
+                    toEditRecipe.prepTimeDuration != null)
+                  addRecipeWatcher.setPrepTimeDuration =
+                      toEditRecipe.prepTimeDuration;
+
                 // if adding a new recipe saveRecipes has NO args
                 shouldNavigate =
                     await addRecipeWatcher.saveRecipe(toEditRecipe.uniqueId);
@@ -148,6 +163,20 @@ class EditRecipeScreen extends ConsumerWidget {
                   hintText: "Add method...",
                   maxLines: 8,
                   formHeight: 130),
+              ExpansionTile(
+                childrenPadding: EdgeInsets.only(left: 20, right: 20),
+                maintainState: true,
+                tilePadding: EdgeInsets.symmetric(horizontal: 90.0),
+                title: AddRecipeText(text: "More info..."),
+                children: [
+                  Servings(
+                    toEditServing: toEditRecipe.servingNumber,
+                  ),
+                  PrepTime(
+                    toEditPrepTimeDuration: toEditRecipe.prepTimeDuration,
+                  )
+                ],
+              ),
               sizedBoxHeightSpace,
             ],
           ),

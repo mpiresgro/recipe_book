@@ -18,7 +18,7 @@ class AddRecipeScreen extends ConsumerWidget {
     const sizedBoxHeightSpace = SizedBox(height: 35);
 
     var mainProviderWatcher = watch(mainProvider);
-    var addRecipeWatcher = watch(recipeProvider);
+    var addRecipeWatcher = watch(addRecipeProvider);
 
     if (mainProviderWatcher.categories.isNotEmpty)
       addRecipeWatcher
