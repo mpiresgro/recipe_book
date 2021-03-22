@@ -1,11 +1,9 @@
-import 'dart:io';
-
 import 'package:recipe_book/models/category.dart';
 import 'package:recipe_book/models/recipe.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:recipe_book/main.dart';
-import 'package:recipe_book/screens/recipe_screen.dart';
+import 'package:recipe_book/routes/arguments.dart';
 
 class RecipeTile extends ConsumerWidget {
   const RecipeTile({this.catIndex, this.recipeIndex});
@@ -36,14 +34,10 @@ class RecipeTile extends ConsumerWidget {
       color: Colors.orange[100],
       child: InkWell(
         onTap: () {
-          Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (context) => RecipeScreen(
-                  catIndex: catIndex,
-                  recipeIndex: recipeIndex,
-                ),
-              ));
+          Navigator.of(context).pushNamed(
+            '/recipe',
+            arguments: RecipeArguments(catIndex, recipeIndex),
+          );
         },
         child: Row(
           children: [
