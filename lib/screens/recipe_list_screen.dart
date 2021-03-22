@@ -3,8 +3,7 @@ import 'package:recipe_book/models/recipe.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:recipe_book/main.dart';
-import 'package:recipe_book/screens/add_recipe_screen.dart';
-import 'package:recipe_book/screens/edit_recipe_screen.dart';
+import 'package:recipe_book/routes/arguments.dart';
 import 'package:recipe_book/widgets/recipe_tile.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 
@@ -85,12 +84,10 @@ class RecipeListScreen extends ConsumerWidget {
         icon: Icons.edit,
         onTap: () {
           RecipeModel toEditRecipe = category.recipeList[index];
-          Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (context) => EditRecipeScreen(
-                    catIndex: catIndex, toEditRecipe: toEditRecipe),
-              ));
+          Navigator.of(context).pushNamed(
+            '/edit_recipe',
+            arguments: EditRecipeArguments(catIndex, toEditRecipe),
+          );
         },
       );
     }
@@ -161,11 +158,9 @@ class RecipeListScreen extends ConsumerWidget {
         backgroundColor: Colors.deepOrangeAccent,
         foregroundColor: Colors.black,
         onPressed: () {
-          Navigator.push(
-            context,
-            MaterialPageRoute(
-              builder: (context) => AddRecipeScreen(catIndex: catIndex),
-            ),
+          Navigator.of(context).pushNamed(
+            '/add_recipe',
+            arguments: AddRecipeArguments(catIndex),
           );
         },
         child: Icon(Icons.add),
