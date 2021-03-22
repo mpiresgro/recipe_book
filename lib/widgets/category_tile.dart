@@ -4,7 +4,7 @@ import 'package:recipe_book/models/category.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:recipe_book/screens/recipe_list_screen.dart';
+import 'package:recipe_book/routes/arguments.dart';
 import 'package:recipe_book/utils/load_image.dart';
 
 class GridTileElement extends StatelessWidget {
@@ -22,7 +22,8 @@ class GridTileElement extends StatelessWidget {
           children: [
             Consumer(builder: (context, watch, child) {
               final mainProviderWatcher = watch(mainProvider);
-              final CategoryModel category = mainProviderWatcher.categories[catIndex];
+              final CategoryModel category =
+                  mainProviderWatcher.categories[catIndex];
               return Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
@@ -46,11 +47,9 @@ class GridTileElement extends StatelessWidget {
             InkWell(
               splashColor: Colors.yellow,
               onTap: () {
-                Navigator.of(context).push(
-                  PageRouteBuilder(
-                    pageBuilder: (context, animationOne, animationTwo) =>
-                        RecipeListScreen(catIndex: catIndex),
-                  ),
+                Navigator.of(context).pushNamed(
+                  '/recipe_list',
+                  arguments: RecipeListArguments(catIndex),
                 );
               },
             ),
